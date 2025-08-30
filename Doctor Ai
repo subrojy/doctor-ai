@@ -1,0 +1,54 @@
+import React, { useState } from 'react'
+
+export default function App() {
+  const [symptom, setSymptom] = useState('')
+  const [diagnosis, setDiagnosis] = useState(null)
+  const [medicine, setMedicine] = useState(null)
+
+  const handleCheck = () => {
+    if (!symptom) return
+    if (symptom.toLowerCase().includes('fever')) {
+      setDiagnosis('Possible Viral Infection')
+      setMedicine('Paracetamol 500mg, 3x/day')
+    } else if (symptom.toLowerCase().includes('cough')) {
+      setDiagnosis('Respiratory Irritation / Cold')
+      setMedicine('Cough Syrup (Dextromethorphan)')
+    } else if (symptom.toLowerCase().includes('headache')) {
+      setDiagnosis('Tension Headache / Migraine')
+      setMedicine('Ibuprofen 400mg, as needed')
+    } else {
+      setDiagnosis('Condition not recognized. Please consult a doctor.')
+      setMedicine(null)
+    }
+  }
+
+  return (
+    <div style={{ textAlign: 'center', padding: 40, fontFamily: 'sans-serif' }}>
+      <h1>Doctor AI</h1>
+      <input
+        type="text"
+        value={symptom}
+        onChange={(e) => setSymptom(e.target.value)}
+        placeholder="Enter symptom (fever, cough, headache)"
+        style={{ padding: 8, width: '80%', margin: '10px 0' }}
+      />
+      <br />
+      <button onClick={handleCheck} style={{ padding: 10, background: 'blue', color: 'white', border: 'none', borderRadius: 5 }}>
+        Diagnose
+      </button>
+
+      {diagnosis && (
+        <div style={{ marginTop: 20, padding: 10, border: '1px solid #ccc', borderRadius: 5 }}>
+          <h3>Diagnosis:</h3>
+          <p>{diagnosis}</p>
+          {medicine && (
+            <>
+              <h4>Suggested Medicine:</h4>
+              <p>{medicine}</p>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
